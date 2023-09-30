@@ -1,0 +1,134 @@
+[gd_scene load_steps=3 format=3 uid="uid://cou0t7ssw7vsj"]
+
+[ext_resource type="Script" path="res://FishTank.cs" id="1_w8ivy"]
+[ext_resource type="PackedScene" uid="uid://eja4idh8p8dv" path="res://fish.tscn" id="2_q7u60"]
+
+[node name="FishTank" type="Node2D"]
+script = ExtResource("1_w8ivy")
+
+[node name="Fish" parent="." instance=ExtResource("2_q7u60")]
+position = Vector2(322, 107)
+
+[node name="Fish2" parent="." instance=ExtResource("2_q7u60")]
+position = Vector2(420, 327)
+
+[node name="Fish3" parent="." instance=ExtResource("2_q7u60")]
+position = Vector2(599, 172)
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 261.0
+offset_bottom = 248.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "This is a label"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "This is a label"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "This is a label"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "This is a label"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "This is a label"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "This is a label"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer7"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "This is a label"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/HBoxContainer7"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1

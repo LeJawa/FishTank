@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dq4qd77wou24h"]
+
+[ext_resource type="Texture2D" uid="uid://cgqrcqu5xxvvy" path="res://assets/fishTile_072.png" id="1_24hr2"]
+
+[node name="Fish" type="Sprite2D"]
+position = Vector2(330, 116)
+texture = ExtResource("1_24hr2")
