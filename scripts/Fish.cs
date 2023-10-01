@@ -69,9 +69,10 @@ public partial class Fish : Node2D
 		return new Vector2(x, y);
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
+		CalculateForces();
+
 		Velocity += Separation;
 		Velocity += Cohesion;
 		Velocity += Alignment;
@@ -123,33 +124,7 @@ public partial class Fish : Node2D
     // boid.vy += (yvel_avg - boid.vy)*matchingfactor
     // (where matchingfactor is a tunable parameter)
 
-
-    private Vector2 Alignment { get {
-		Vector2 alignment = new Vector2(0, 0);
-		int neighborCount = 0;
-		foreach (var otherFish in FishTank.Instance.Fishes)
-		{
-			if (otherFish == this)
-				continue;
-			var distance = otherFish.GlobalPosition.DistanceTo(GlobalPosition);
-			if (distance > visibleRange || distance < protectedRange)
-				continue;
-			
-			alignment += otherFish.Velocity;
-			neighborCount++;
-		}
-
-		if (neighborCount == 0)
-			return alignment;
-
-		alignment /= neighborCount; // average
-		alignment -= Velocity; // difference with current velocity
-		alignment *= matchingFactor; // scale
-
-		return alignment;
-	}
-	}
-
+    private Vector2 Alignment { get; set; } = Vector2.Zero;
 	
 	// Cohesion
 	// Each boid steers gently toward the center of mass of other boids within its visible range. 
@@ -167,31 +142,7 @@ public partial class Fish : Node2D
 	// boid.vy += (ypos_avg - boid.y)*centeringfactor
 	// (where centeringfactor is a tunable parameter)
 
-	private Vector2 Cohesion { get {
-		Vector2 cohesion = new Vector2(0, 0);
-		int neighborCount = 0;
-		foreach (var otherFish in FishTank.Instance.Fishes)
-		{
-			if (otherFish == this)
-				continue;
-			
-			if (otherFish.GlobalPosition.DistanceTo(GlobalPosition) > visibleRange)
-				continue;
-			
-			cohesion += otherFish.GlobalPosition;
-			neighborCount++;
-		}
-
-		if (neighborCount == 0)
-			return cohesion;
-
-		cohesion /= neighborCount; // average
-		cohesion -= GlobalPosition; // difference with current position
-		cohesion *= centeringFactor; // scale
-
-		return cohesion;
-	}}
-
+	private Vector2 Cohesion { get; set; } = Vector2.Zero;
 
 	// Separation
 	// Each boid attempts to avoid running into other boids.
@@ -206,25 +157,48 @@ public partial class Fish : Node2D
     // boid.vy += close_dy*avoidfactor
     // (where avoidfactor is a tunable parameter)
 
-	private Vector2 Separation { get {
-		Vector2 separation = new Vector2(0, 0);
+	private Vector2 Separation { get; set; } = Vector2.Zero;
+
+	private void CalculateForces() {
+		Separation = new Vector2(0, 0);
+		Cohesion = new Vector2(0, 0);
+		Alignment = new Vector2(0, 0);
+		int neighborCount = 0;
 		foreach (var otherFish in FishTank.Instance.Fishes)
 		{
 			if (otherFish == this)
-				continue;
+				continue;			
 			
-			if (otherFish.GlobalPosition.DistanceTo(GlobalPosition) > protectedRange)
-				continue;
+			var distance = otherFish.GlobalPosition.DistanceTo(GlobalPosition);
 			
-			separation += GlobalPosition - otherFish.GlobalPosition;
+			if (distance > visibleRange)
+				continue;
+
+			if (distance < protectedRange)
+			{
+				Separation += GlobalPosition - otherFish.GlobalPosition;
+				continue;
+			}
+
+			Cohesion += otherFish.GlobalPosition;
+			Alignment += otherFish.Velocity;
+			neighborCount++;		
+			
 		}
 
-		separation *= avoidFactor; // scale
+		Separation *= avoidFactor; // scale
 
-		return separation;
-	}}
+		if (neighborCount == 0)
+			return;
+		
+		Cohesion /= neighborCount; // average
+		Cohesion -= GlobalPosition; // difference with current position
+		Cohesion *= centeringFactor; // scale
 
-	
+		Alignment /= neighborCount; // average
+		Alignment -= Velocity; // difference with current velocity
+		Alignment *= matchingFactor; // scale
+	}
 	// Screen edges
 	// We want our boids to turn-around at an organic-looking turn radius when they approach an edge of the TFT. 
 	// We will do so in the following way:
