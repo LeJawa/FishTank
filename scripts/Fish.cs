@@ -5,16 +5,53 @@ public partial class Fish : Node2D
 {
 	public Vector2 Velocity = new Vector2(0, 0);
 
-	float turnfactor = 1f;
-	float margin = 100;
-	float protectedRange = 70;
-	float avoidFactor = 1f;
-	float visibleRange = 250;
-	float matchingFactor = 1f;
-	float centeringFactor = 1f;
+	public static float turnfactor = 1f;
+	public static float margin = 100;
+	public static float protectedRange = 70;
+	public static float avoidFactor = 1f;
+	public static float visibleRange = 250;
+	public static float matchingFactor = 1f;
+	public static float centeringFactor = 1f;
 
-	float minSpeed = 3f;
-	float maxSpeed = 6f;
+	public static float minSpeed = 30;
+	public static float maxSpeed = 60;
+
+	public static void OnVisibleRangeChanged(double value){
+		visibleRange = (float)value;
+		UpdateGizmos();
+	}
+	public static void OnTurnFactorChanged(double value){
+    turnfactor = (float)value;
+	}
+
+	public static void OnMarginChanged(double value){
+		margin = (float)value;
+	}
+
+	public static void OnProtectedRangeChanged(double value){
+		protectedRange = (float)value;
+		UpdateGizmos();
+	}
+
+	public static void OnAvoidFactorChanged(double value){
+		avoidFactor = (float)value;
+	}
+
+	public static void OnMatchingFactorChanged(double value){
+		matchingFactor = (float)value;
+	}
+
+	public static void OnCenteringFactorChanged(double value){
+		centeringFactor = (float)value;
+	}
+
+	public static void OnMinSpeedChanged(double value){
+		minSpeed = (float)value;
+	}
+
+	public static void OnMaxSpeedChanged(double value){
+		maxSpeed = (float)value;
+	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -216,9 +253,16 @@ public partial class Fish : Node2D
 		return reflection;
     }}}
 
+	private static void UpdateGizmos(){
+		foreach (var fish in FishTank.Instance.GetFishes())
+		{
+			fish.QueueRedraw();
+		}
+	}
+
 
 	public override void _Draw(){
 		DrawCircle(new Vector2(0, 0), protectedRange, new Color(1, 0, 0, 0.2f));
-		DrawCircle(new Vector2(0, 0), visibleRange, new Color(0, 0, 1, 0.2f));
+		DrawCircle(new Vector2(0, 0), visibleRange, new Color(0, 1, 0, 0.2f));
 	}
 }

@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://mfm3mwswtqgt"]
+
+[ext_resource type="Script" path="res://scripts/DebugValue.cs" id="1_3tb1r"]
+[ext_resource type="Script" path="res://scripts/ValueLabel.cs" id="2_h8uot"]
+
+[node name="DebugValue" type="HBoxContainer"]
+size_flags_vertical = 3
+script = ExtResource("1_3tb1r")
+
+[node name="TextLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Visible Range"
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+max_value = 1000.0
+step = 10.0
+value = 250.0
+
+[node name="ValueLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+text = "250"
+horizontal_alignment = 2
+script = ExtResource("2_h8uot")
