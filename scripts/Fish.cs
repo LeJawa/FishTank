@@ -18,6 +18,8 @@ public partial class Fish : Node2D
 	public static float turnfactor = 0.2f;
 	public static float margin = 150;
 
+	public static float visibleRangeSquared = visibleRange * visibleRange;
+	public static float protectedRangeSquared = protectedRange * protectedRange;
 
 	public static void OnVisibleRangeChanged(double value){
 		visibleRange = (float)value;
@@ -170,12 +172,12 @@ public partial class Fish : Node2D
 			if (otherFish == this)
 				continue;			
 			
-			var distance = otherFish.GlobalPosition.DistanceTo(GlobalPosition);
+			var distance2 = otherFish.GlobalPosition.DistanceSquaredTo(GlobalPosition);
 			
-			if (distance > visibleRange)
+			if (distance2 > visibleRangeSquared)
 				continue;
 
-			if (distance < protectedRange)
+			if (distance2 < protectedRangeSquared)
 			{
 				Separation += GlobalPosition - otherFish.GlobalPosition;
 				continue;
