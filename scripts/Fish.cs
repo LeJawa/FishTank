@@ -101,7 +101,7 @@ public partial class Fish : Node2D
 
     private void ImposeSpeedLimits()
     {
-		var speed = Velocity.Length();
+		var speed = Velocity.FastLength();
 
 		if (speed > maxSpeed){
 			Velocity *= maxSpeed / speed;
@@ -185,8 +185,7 @@ public partial class Fish : Node2D
 
 			Cohesion += otherFish.GlobalPosition;
 			Alignment += otherFish.Velocity;
-			neighborCount++;		
-			
+			neighborCount++;
 		}
 
 		Separation *= avoidFactor; // scale
