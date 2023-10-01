@@ -10,13 +10,13 @@ public partial class Fish : Node2D
 
 	public static float visibleRange = 40;
 	public static float protectedRange = 11;
-	public static float minSpeed = 50;
-	public static float maxSpeed = 80;
+	public static float minSpeed = 3;
+	public static float maxSpeed = 6;
 	public static float matchingFactor = 0.008f;
 	public static float centeringFactor = 0.0004f;
 	public static float avoidFactor = 0.04f;
 	public static float turnfactor = 0.2f;
-	public static float margin = 250;
+	public static float margin = 150;
 
 
 	public static void OnVisibleRangeChanged(double value){
@@ -66,7 +66,8 @@ public partial class Fish : Node2D
 		var rand = new Random();
 		var x = (float)rand.NextDouble() * 2 - 1;
 		var y = (float)rand.NextDouble() * 2 - 1;
-		return new Vector2(x, y);
+		
+		return new Vector2(x, y) * maxSpeed;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -81,7 +82,7 @@ public partial class Fish : Node2D
 		ImposeSpeedLimits();
 
 
-		Position += Velocity * (float)delta;
+		Position += Velocity * (float)delta * 50;
 	}
 
 
@@ -231,15 +232,23 @@ public partial class Fish : Node2D
     }}}
 
 	private static void UpdateGizmos(){
+		if (!debugGizmos)
+			return;
+		
 		foreach (var fish in FishTank.Instance.Fishes)
 		{
 			fish.QueueRedraw();
 		}
 	}
 
+	static bool debugGizmos = false;
+
 
 	public override void _Draw(){
-		// DrawCircle(new Vector2(0, 0), protectedRange, new Color(1, 0, 0, 0.2f));
-		// DrawCircle(new Vector2(0, 0), visibleRange, new Color(0, 1, 0, 0.2f));
+		if (!debugGizmos)
+			return;
+		
+		DrawCircle(new Vector2(0, 0), protectedRange, new Color(1, 0, 0, 0.2f));
+		DrawCircle(new Vector2(0, 0), visibleRange, new Color(0, 1, 0, 0.2f));
 	}
 }
