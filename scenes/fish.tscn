@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://scripts/Fish_Sprite2D.cs" id="3_i5jx7"]
 
 [node name="Fish" type="Node2D" groups=["Fish"]]
+scale = Vector2(0.6, 0.6)
 script = ExtResource("1_sr4dn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

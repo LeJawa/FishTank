@@ -29,7 +29,7 @@ public partial class DebugValue : HBoxContainer
 		set
 		{
 			slider.Value = value;
-			valueLabel.Text = value.ToString();
+			valueLabel.Value = value;
 		}
 	}
 
@@ -45,18 +45,6 @@ public partial class DebugValue : HBoxContainer
 	{
 		slider.MinValue = min;
 		slider.MaxValue = max;
-
-		if (max - min > 100)
-		{
-			slider.Step = 10;
-		}
-		else if (max - min > 10)
-		{
-			slider.Step = 1;
-		}
-		else
-		{
-			slider.Step = 0.1f;
-		}
+		slider.Step = (max - min) / 100;
 	}
 }

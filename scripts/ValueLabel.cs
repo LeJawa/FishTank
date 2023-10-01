@@ -9,6 +9,10 @@ public partial class ValueLabel : Label
 	}
 
 	public void OnValueChanged(double value){
-		Text = value.ToString("0.00");
+		Value = value;
 	}
+
+	public double Value { set{
+		Text = value.ToString("0.0000");
+	}}
 }

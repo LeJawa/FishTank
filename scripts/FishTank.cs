@@ -9,10 +9,12 @@ public partial class FishTank : Node2D
 	public static FishTank Instance { get; private set; }
 
 	Vector2I tankSize;
+
+	[Export]
 	private PackedScene fishScene;
 	private Timer timer;
 
-	private List<Fish> fishes;
+	public List<Fish> Fishes {get; private set;}
 
 	public int LeftMargin => 0;
 	public int RightMargin => tankSize.X;
@@ -24,10 +26,10 @@ public partial class FishTank : Node2D
 		var size = DisplayServer.WindowGetSize();
 		tankSize = new Vector2I(size.X - 100, size.Y - 100);
 
-        fishScene = GD.Load<PackedScene>("res://fish.tscn");
+        // fishScene = GD.Load<PackedScene>(fishScenePath);
 		timer = GetNode<Timer>("SpawnTimer");
 
-		fishes = GetTree().GetNodesInGroup("Fish").Cast<Fish>().ToList();
+		Fishes = GetTree().GetNodesInGroup("Fish").Cast<Fish>().ToList();
 
 		Instance = this;
     }
@@ -42,11 +44,6 @@ public partial class FishTank : Node2D
         }
     }
 
-	public List<Fish> GetFishes()
-	{
-		return fishes;
-	}
-
     private void AddFish()
     {
 		// get the mouse position
@@ -58,7 +55,7 @@ public partial class FishTank : Node2D
         // add the fish to the scene
         AddChild(newFish);
 		// add the fish to the fishes list
-		fishes.Add(newFish);
+		Fishes.Add(newFish);
         // reset the timer
         timer.Stop();
         timer.Start();

@@ -1,38 +1,24 @@
 [gd_scene load_steps=4 format=3 uid="uid://cou0t7ssw7vsj"]
 
 [ext_resource type="Script" path="res://scripts/FishTank.cs" id="1_y30na"]
-[ext_resource type="PackedScene" uid="uid://eja4idh8p8dv" path="res://scenes/fish.tscn" id="2_q7u60"]
-[ext_resource type="Script" path="res://scripts/DebugPanel.cs" id="3_05otk"]
+[ext_resource type="PackedScene" uid="uid://ce4byrtfxf4cs" path="res://scenes/point_fish.tscn" id="3_mhww6"]
+[ext_resource type="PackedScene" uid="uid://d2unupnv8hjry" path="res://scenes/debug_panel.tscn" id="3_qkuwo"]
 
 [node name="FishTank" type="Node2D"]
 script = ExtResource("1_y30na")
-
-[node name="Fish" parent="." instance=ExtResource("2_q7u60")]
-position = Vector2(322, 107)
-
-[node name="Fish2" parent="." instance=ExtResource("2_q7u60")]
-position = Vector2(420, 327)
-
-[node name="Fish3" parent="." instance=ExtResource("2_q7u60")]
-position = Vector2(599, 172)
+fishScene = ExtResource("3_mhww6")
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
 
-[node name="DebugPanel" type="Panel" parent="."]
-offset_right = 330.0
-offset_bottom = 358.0
-script = ExtResource("3_05otk")
+[node name="DebugPanel" parent="." instance=ExtResource("3_qkuwo")]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DebugPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="PointFish" parent="." instance=ExtResource("3_mhww6")]
+position = Vector2(503, 525)
+
+[node name="PointFish2" parent="." instance=ExtResource("3_mhww6")]
+position = Vector2(707, 514)
+
+[node name="PointFish3" parent="." instance=ExtResource("3_mhww6")]
+position = Vector2(605, 350)

@@ -1,20 +1,23 @@
 using Godot;
 using System;
 
+// Boid Algorithm based on this article by V. Hunter Adams
+// https://vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html
+
 public partial class Fish : Node2D
 {
 	public Vector2 Velocity = new Vector2(0, 0);
 
-	public static float turnfactor = 1f;
-	public static float margin = 100;
-	public static float protectedRange = 70;
-	public static float avoidFactor = 1f;
-	public static float visibleRange = 250;
-	public static float matchingFactor = 1f;
-	public static float centeringFactor = 1f;
+	public static float visibleRange = 40;
+	public static float protectedRange = 11;
+	public static float minSpeed = 50;
+	public static float maxSpeed = 80;
+	public static float matchingFactor = 0.008f;
+	public static float centeringFactor = 0.0004f;
+	public static float avoidFactor = 0.04f;
+	public static float turnfactor = 0.2f;
+	public static float margin = 250;
 
-	public static float minSpeed = 30;
-	public static float maxSpeed = 60;
 
 	public static void OnVisibleRangeChanged(double value){
 		visibleRange = (float)value;
@@ -67,7 +70,7 @@ public partial class Fish : Node2D
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		Velocity += Separation;
 		Velocity += Cohesion;
@@ -124,7 +127,7 @@ public partial class Fish : Node2D
     private Vector2 Alignment { get {
 		Vector2 alignment = new Vector2(0, 0);
 		int neighborCount = 0;
-		foreach (var otherFish in FishTank.Instance.GetFishes())
+		foreach (var otherFish in FishTank.Instance.Fishes)
 		{
 			if (otherFish == this)
 				continue;
@@ -167,7 +170,7 @@ public partial class Fish : Node2D
 	private Vector2 Cohesion { get {
 		Vector2 cohesion = new Vector2(0, 0);
 		int neighborCount = 0;
-		foreach (var otherFish in FishTank.Instance.GetFishes())
+		foreach (var otherFish in FishTank.Instance.Fishes)
 		{
 			if (otherFish == this)
 				continue;
@@ -205,7 +208,7 @@ public partial class Fish : Node2D
 
 	private Vector2 Separation { get {
 		Vector2 separation = new Vector2(0, 0);
-		foreach (var otherFish in FishTank.Instance.GetFishes())
+		foreach (var otherFish in FishTank.Instance.Fishes)
 		{
 			if (otherFish == this)
 				continue;
@@ -254,7 +257,7 @@ public partial class Fish : Node2D
     }}}
 
 	private static void UpdateGizmos(){
-		foreach (var fish in FishTank.Instance.GetFishes())
+		foreach (var fish in FishTank.Instance.Fishes)
 		{
 			fish.QueueRedraw();
 		}
@@ -262,7 +265,7 @@ public partial class Fish : Node2D
 
 
 	public override void _Draw(){
-		DrawCircle(new Vector2(0, 0), protectedRange, new Color(1, 0, 0, 0.2f));
-		DrawCircle(new Vector2(0, 0), visibleRange, new Color(0, 1, 0, 0.2f));
+		// DrawCircle(new Vector2(0, 0), protectedRange, new Color(1, 0, 0, 0.2f));
+		// DrawCircle(new Vector2(0, 0), visibleRange, new Color(0, 1, 0, 0.2f));
 	}
 }
