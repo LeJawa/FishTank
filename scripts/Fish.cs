@@ -131,8 +131,8 @@ public partial class Fish : Node2D
 		{
 			if (otherFish == this)
 				continue;
-			
-			if (otherFish.GlobalPosition.DistanceTo(GlobalPosition) > visibleRange)
+			var distance = otherFish.GlobalPosition.DistanceTo(GlobalPosition);
+			if (distance > visibleRange || distance < protectedRange)
 				continue;
 			
 			alignment += otherFish.Velocity;
